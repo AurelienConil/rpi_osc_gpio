@@ -1,7 +1,6 @@
 [Unit]
-Description=PyDemon Motion ALPR
+Description=OSC GPIO
 After=multi-user.target
-Requires=network.target
 After=network-online.target
 
 
