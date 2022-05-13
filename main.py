@@ -40,6 +40,7 @@ def main():
     # GPIO SETUP
     GPIO.setmode(GPIO.BOARD) 
     channel = CHANNEL #Use BOARD numbering
+    GPIO.setup(channel, GPIO.IN)
 
     # OSC CLIENT
     global client_local
