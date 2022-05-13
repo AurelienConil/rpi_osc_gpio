@@ -49,6 +49,13 @@ PORT = 12345
 * MSGARD : has to be ONE argument only
 * PORT : port to send the message to.
 
+# Auto start , service
+
+`
+cd service
+sudo chmod +x install.sh
+sudo reboot
+`
 
 
 
