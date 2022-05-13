@@ -54,24 +54,30 @@ def main():
     client_local.connect((mip, mport))
 
     print(" ===== STARTING MAIN LOOP ====")
-    try:  
-        while True:            # this will carry on until you hit CTRL+C  
-            print("wait for signal")
-            while((GPIO.input(channel)==0)==WAITFORRAISE):
-                time.sleep(0.3)
+    while runningApp:
+
+        
+        print("Waiting for GPIO event")
+        if(WAITFORRAISE):
+            GPIO.wait_for_edge(channel, GPIO.RISING)
+        else :
+            GPIO.wait_for_edge(channel, GPIO.FALLING)
             try:
                 sendMessage(MSGADDRESS, MSGARG)
-                print("MESSAGE SENT")
             except:
                 print("ERROR SEND OSC MESSAGE")
-            while((GPIO.input(channel)==0)!=WAITFORRAISE):
-                time.sleep(0.3)
+            print("OSC MESSAGE SENT :"+MSGADDRESS+" : "+str(MSGARG))
+            # if(WAITFORRAISE):
+            #     GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
+            # else:
+            #     GPIO.wait_for_edge(channel, GPIO.RISING)
+            
+            time.sleep(1)
+        
 
-            time.sleep(1)         # wait 0.1 seconds  
-    
-    finally:                   # this block will run no matter how the try block exits  
-        GPIO.cleanup()         # clean up after yourself 
-     
+    print("Main loop is quit. Closing software")
+    GPIO.cleanup()
+
 
 if __name__ == "__main__":
     main()
