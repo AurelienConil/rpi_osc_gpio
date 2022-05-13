@@ -7,6 +7,8 @@ WAITFORRAISE = False
 MSGADDRESS = "playmain"
 MSGARG = 0 # has to be int
 PORT = 12345
+IP = "127.0.0.1"
+PULLUP = GPIO.PUD_UP
 
 ###### NOTES AND DOCUMENTATION #######
 
@@ -41,12 +43,12 @@ def main():
     GPIO.cleanup()
     GPIO.setmode(GPIO.BOARD) 
     channel = CHANNEL #Use BOARD numbering
-    GPIO.setup(channel, GPIO.IN)
+    GPIO.setup(channel, GPIO.IN,pull_up_down=PULLUP)
 
     # OSC CLIENT
     global client_local
     client_local = OSCClient()
-    mip = "127.0.0.1"
+    mip = IP
     mport = PORT
     print("Client OSC to local | ip: "+mip+"  | port: "+str(mport))
     client_local.connect((mip, mport))
@@ -59,7 +61,7 @@ def main():
         if(WAITFORRAISE):
             GPIO.wait_for_edge(channel, GPIO.RISING)
         else :
-            GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
+            GPIO.wait_for_edge(channel, GPIO.FALLING)
             try:
                 sendMessage(MSGADDRESS, MSGARG)
             except:
