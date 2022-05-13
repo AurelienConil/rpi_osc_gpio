@@ -24,7 +24,7 @@ PORT = 12345
 #    a, b, c = float(s1), float(s2), float(s3)
 
 
-def sendMessage(address, arg)
+def sendMessage(address, arg):
     global client_local
     oscmsg = OSCMessage()
     oscmsg.setAddress("/"+address)
@@ -61,7 +61,7 @@ def main():
             sendMessage(MSGADDRESS, MSGARG)
             print("OSC MESSAGE SENT :"+MSGADDRESS+" : "+str(MSGARG))
             if(WAITFORRAISE):
-                GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING):
+                GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
             else:
                 GPIO.wait_for_edge(channel, GPIO.RISING)
 
