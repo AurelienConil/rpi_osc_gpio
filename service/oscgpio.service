@@ -1,15 +1,11 @@
 [Unit]
 Description=OSC GPIO
-After=multi-user.target
-After=network-online.target
-
 
 [Service]
-Type=simple
-User = pi
+Type=forking
+User=pi
 ExecStart=/usr/bin/python -u /home/pi/Documents/rpi_osc_gpio/main.py
-WorkingDirectory=/home/pi/Documents/rpi_osc_gpio/
-Restart=on-abort
+WorkingDirectory=/home/pi/Documents/rpi_osc_gpio
 
 [Install]
 WantedBy=mutli-user.target
