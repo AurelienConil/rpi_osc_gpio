@@ -55,19 +55,20 @@ def main():
 
         
         print("Waiting for GPIO event")
-        if(WAITFORRAISE):
-            GPIO.wait_for_edge(channel, GPIO.RISING)
-        else :
-            GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
-
-        sendMessage(MSGADDRESS, MSGARG)
-        print("OSC MESSAGE SENT :"+MSGADDRESS+" : "+str(MSGARG))
-        if(WAITFORRAISE):
-            GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
-        else:
-            GPIO.wait_for_edge(channel, GPIO.RISING)
         try:
-            time.sleep(1)
+            if(WAITFORRAISE):
+                GPIO.wait_for_edge(channel, GPIO.RISING)
+            else :
+                GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
+
+            sendMessage(MSGADDRESS, MSGARG)
+            print("OSC MESSAGE SENT :"+MSGADDRESS+" : "+str(MSGARG))
+            if(WAITFORRAISE):
+                GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
+            else:
+                GPIO.wait_for_edge(channel, GPIO.RISING)
+            
+                time.sleep(1)
         except:
             print("User attempt to close programm")
             runningApp = False
