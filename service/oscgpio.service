@@ -8,7 +8,7 @@ After=network-online.target
 [Service]
 Type=simple
 User = pi
-ExecStart=/usr/bin/python /home/pi/rpi_osc_gpio/main.py
+ExecStart=/usr/bin/python /home/pi/Documents/rpi_osc_gpio/main.py
 WorkingDirectory=/home/pi/rpi_osc_gpio/
 Restart=on-abort
 
