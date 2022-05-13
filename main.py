@@ -2,8 +2,8 @@ from OSC import OSCClient, OSCMessage
 import RPi.GPIO as GPIO
 import time
 
-CHANNEL = 11
-WAITFORRAISE = True
+CHANNEL = 13
+WAITFORRAISE = False
 MSGADDRESS = "playmain"
 MSGARG = 0 # has to be int
 PORT = 12345
@@ -38,6 +38,7 @@ def main():
     runningApp = True
 
     # GPIO SETUP
+    GPIO.cleanup()
     GPIO.setmode(GPIO.BOARD) 
     channel = CHANNEL #Use BOARD numbering
     GPIO.setup(channel, GPIO.IN)
@@ -55,23 +56,22 @@ def main():
 
         
         print("Waiting for GPIO event")
-        try:
-            if(WAITFORRAISE):
-                GPIO.wait_for_edge(channel, GPIO.RISING)
-            else :
-                GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
-
-            sendMessage(MSGADDRESS, MSGARG)
+        if(WAITFORRAISE):
+            GPIO.wait_for_edge(channel, GPIO.RISING)
+        else :
+            GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
+            try:
+                sendMessage(MSGADDRESS, MSGARG)
+            except:
+                print("ERROR SEND OSC MESSAGE")
             print("OSC MESSAGE SENT :"+MSGADDRESS+" : "+str(MSGARG))
-            if(WAITFORRAISE):
-                GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
-            else:
-                GPIO.wait_for_edge(channel, GPIO.RISING)
+            # if(WAITFORRAISE):
+            #     GPIO.wait_for_edge(channel, GPIO.GPIO.FALLING)
+            # else:
+            #     GPIO.wait_for_edge(channel, GPIO.RISING)
             
-                time.sleep(1)
-        except:
-            print("User attempt to close programm")
-            runningApp = False
+            time.sleep(1)
+        
 
     print("Main loop is quit. Closing software")
     GPIO.cleanup()
