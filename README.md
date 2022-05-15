@@ -51,11 +51,16 @@ PORT = 12345
 
 # Auto start , service
 
-`
-cd service
+GIT has to be installed in /home/pi/Documents
+
+```
+cd /home/pi/Documents/rpi_osc_gpio/service
 sudo chmod +x install.sh
+./install.sh
 sudo reboot
-`
+```
+
+
 
 
 
