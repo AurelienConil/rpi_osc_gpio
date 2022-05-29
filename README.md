@@ -40,7 +40,7 @@ CHANNEL = 11
 WAITFORRAISE = True
 MSGADDRESS = "playmain"
 MSGARG = 0 
-PORT = 12345
+PORT = 12344
 ```
 
 * CHANNEL :  input pin of the sensor

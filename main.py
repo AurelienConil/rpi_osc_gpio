@@ -1,12 +1,13 @@
+from pickle import TRUE
 from OSC import OSCClient, OSCMessage
 import RPi.GPIO as GPIO
 import time
 
-CHANNEL = 13
-WAITFORRAISE = False
-MSGADDRESS = "playmain"
+CHANNEL = 7
+WAITFORRAISE = True
+MSGADDRESS = "video/playmain"
 MSGARG = 0 # has to be int
-PORT = 12345
+PORT = 12344
 IP = "127.0.0.1"
 PULLUP = GPIO.PUD_UP
 
@@ -41,8 +42,8 @@ def main():
 
     # GPIO SETUP
     GPIO.cleanup()
-    GPIO.setmode(GPIO.BOARD) 
-    channel = CHANNEL #Use BOARD numbering
+    GPIO.setmode(GPIO.BCM) 
+    channel = CHANNEL
     GPIO.setup(channel, GPIO.IN,pull_up_down=PULLUP)
 
     # OSC CLIENT
@@ -51,7 +52,14 @@ def main():
     mip = IP
     mport = PORT
     print("Client OSC to local | ip: "+mip+"  | port: "+str(mport))
-    client_local.connect((mip, mport))
+    while client_local.address() == None :
+        try: 
+            client_local.connect((mip, mport))
+            print("connected")
+        except Exception as inst:
+            print("OSC Client connection error : ")
+            print(inst)
+        time.sleep(1)
 
     print(" ===== STARTING MAIN LOOP ====")
     try:  
